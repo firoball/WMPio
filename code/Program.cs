@@ -12,6 +12,7 @@ namespace WMPio
         {
             Map map = new Map();
             map.Parse("..\\..\\..\\meta\\vrdemw.wmp");
+//            map.Parse("..\\..\\..\\meta\\vrdemw_old.wmp");
         }
     }
 }

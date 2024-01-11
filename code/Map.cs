@@ -42,7 +42,7 @@ namespace WMPio
                     {
                         string[] data = line.Split(new[] { ';' }, StringSplitOptions.RemoveEmptyEntries);
                         string[] values = data[0].Split(new[] { ' ', '\t' }, StringSplitOptions.RemoveEmptyEntries);
-                        int index = int.Parse(Regex.Replace(data[1], @"[ \t#]", ""));
+                        int index = int.Parse(Regex.Replace(data[1], @"[ \t#index]", ""));
 
                         string id = values[0].ToLower();
                         switch (id)
@@ -108,8 +108,7 @@ namespace WMPio
             float x = float.Parse(values[2], CultureInfo.InvariantCulture);
             float y = float.Parse(values[3], CultureInfo.InvariantCulture);
             float angle = float.Parse(values[4], CultureInfo.InvariantCulture);
-            int regionIndex = int.Parse(values[5]);
-            Region region = Regions.Find(r => r.Index == regionIndex);
+            Region region = FindRegion(values[5]);
 
             Actor actor = new Actor(name, x, y, angle, region, index);
             Actors.Add(actor);
@@ -121,8 +120,7 @@ namespace WMPio
             float x = float.Parse(values[2], CultureInfo.InvariantCulture);
             float y = float.Parse(values[3], CultureInfo.InvariantCulture);
             float angle = float.Parse(values[4], CultureInfo.InvariantCulture);
-            int regionIndex = int.Parse(values[5]);
-            Region region = Regions.Find(r => r.Index == regionIndex);
+            Region region = FindRegion(values[5]);
 
             Thing thing = new Thing(name, x, y, angle, region, index);
             Things.Add(thing);
@@ -133,17 +131,14 @@ namespace WMPio
             string name = values[1];
             int vertex1Index = int.Parse(values[2]);
             int vertex2Index = int.Parse(values[3]);
-            int region1Index = int.Parse(values[4]);
-            int region2Index = int.Parse(values[5]);
+            Region region1 = FindRegion(values[4]);
+            Region region2 = FindRegion(values[5]);
             float offsetX = float.Parse(values[6], CultureInfo.InvariantCulture);
             float offsetY = float.Parse(values[7], CultureInfo.InvariantCulture);
             Vertex vertex1 = Vertices.Find(v => v.Index == vertex1Index);
             Vertex vertex2 = Vertices.Find(v => v.Index == vertex2Index);
-            Region region1 = Regions.Find(r => r.Index == region1Index);
-            Region region2 = Regions.Find(r => r.Index == region2Index);
 
             Wall wall = new Wall(name, vertex1, vertex2, region1, region2, offsetX, offsetY, index);
-
             Walls.Add(wall);
         }
 
@@ -152,8 +147,7 @@ namespace WMPio
             float x = float.Parse(values[1], CultureInfo.InvariantCulture);
             float y = float.Parse(values[2], CultureInfo.InvariantCulture);
             float angle = float.Parse(values[3], CultureInfo.InvariantCulture);
-            int regionIndex = int.Parse(values[4]);
-            Region region = Regions.Find(r => r.Index == regionIndex);
+            Region region = FindRegion(values[4]);
 
             PlayerStart playerStart = new PlayerStart(x, y, angle, region, index);
             PlayerStarts.Add(playerStart);
@@ -171,5 +165,23 @@ namespace WMPio
             }
             Ways.Add(new Way(name, points, index));
         }
+
+        private Region FindRegion(string name)
+        {
+            Region region;
+            if (int.TryParse(name, out int regionIndex))
+                region = Regions.Find(r => r.Index == regionIndex); //new format
+            else
+            {
+                region = Regions.Find(r => r.Name == name); //old format
+                if (region == null)
+                {
+                    region = new Region(name);
+                    Regions.Add(region);
+                }
+            }
+            return region;
+        }
+
     }
 }
