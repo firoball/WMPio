@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -26,5 +27,11 @@ namespace WMPio
             OffsetX = offsetX;
             OffsetY = offsetY;
         }
+
+        public override string Format(string format)
+        {
+            return string.Format(CultureInfo.InvariantCulture, format, Name, Vertex1.Index, Vertex2.Index, Region1.Index, Region2.Index, OffsetX, OffsetY, Index);
+        }
+
     }
 }

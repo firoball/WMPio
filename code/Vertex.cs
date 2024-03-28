@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,5 +20,11 @@ namespace WMPio
             Z = z;
             Index = index;
         }
+
+        public override string Format(string format)
+        {
+            return string.Format(CultureInfo.InvariantCulture, format, X, Y, Z, Index);
+        }
+
     }
 }

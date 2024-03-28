@@ -11,8 +11,10 @@ namespace WMPio
         static void Main(string[] args)
         {
             Map map = new Map();
-            map.Parse("..\\..\\..\\meta\\vrdemw.wmp");
-//            map.Parse("..\\..\\..\\meta\\vrdemw_old.wmp");
+            //map.Parse("..\\..\\..\\meta\\vrdemw.wmp");
+            map.Parse("..\\..\\..\\meta\\vrdemw_old.wmp");
+            //map.Export("..\\..\\..\\meta\\vrdemw_wmpio.wmp");
+            map.Export("..\\..\\..\\meta\\vrdemw_old_wmpio.wmp");
         }
     }
 }

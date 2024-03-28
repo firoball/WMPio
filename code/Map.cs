@@ -19,6 +19,8 @@ namespace WMPio
         public List<Actor> Actors;
         public List<Way> Ways;
 
+        private int newRegionIndex = 0; //region indexer for old format
+
         public Map()
         {
             Vertices = new List<Vertex>();
@@ -28,6 +30,16 @@ namespace WMPio
             Things = new List<Thing>();
             Actors = new List<Actor>();
             Ways = new List<Way>();
+        }
+
+        public void Export(string filePath)
+        {
+            using (StreamWriter writer = new StreamWriter(filePath))
+            {
+                string file = Path.GetFileName(filePath);
+                string output = Formatter.Format(this, file);
+                writer.Write(output);
+            }
         }
 
         public void Parse(string filePath)
@@ -176,8 +188,9 @@ namespace WMPio
                 region = Regions.Find(r => r.Name == name); //old format
                 if (region == null)
                 {
-                    region = new Region(name);
+                    region = new Region(name, newRegionIndex);
                     Regions.Add(region);
+                    newRegionIndex++;
                 }
             }
             return region;

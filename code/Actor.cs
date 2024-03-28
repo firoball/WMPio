@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -22,5 +23,11 @@ namespace WMPio
             Angle = angle;
             Region = region;
         }
+
+        public override string Format(string format)
+        {
+            return string.Format(CultureInfo.InvariantCulture, format, Name, X, Y, Angle, Region.Index, Index);
+        }
+
     }
 }
