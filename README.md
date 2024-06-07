@@ -14,7 +14,7 @@ Acknex3 used to be a 3d game engine based on raycaster technology.
 Acknex3 heavily depends on WDL script definitions for map objects. WMPio does not handle parsing of WDL files.
 A 100% accurate representation of any A3 map is only possible with obtaining additional details from object definitions found in WDL scripts.
 WMP files only contain the level layout and some very basic parameters.
-If in need of a WDL parser you may want to take a look at [https://github.com/firoball/WDL2CS](WDL2CS).
+If in need of a WDL parser you may want to take a look at [WDL2CS](https://github.com/firoball/WDL2CS).
 
 ## Out of scope
 
