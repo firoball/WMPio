@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace WMPio
 {
-    class Vertex : WMPObject
+    public class Vertex : WMPObject
     {
         public float X;
         public float Y;

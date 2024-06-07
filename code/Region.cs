@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace WMPio
 {
-    class Region : WMPObject
+    public class Region : WMPObject
     {
         public string Name;
         public float FloorHeight;

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace WMPio
 {
-    class Actor : WMPObject
+    public class Actor : WMPObject
     {
         public string Name;
         public float X;

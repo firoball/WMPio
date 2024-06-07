@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace WMPio
 {
-    class WMPObject
+    public class WMPObject
     {
         public int Index;
 

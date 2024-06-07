@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace WMPio
 {
-    class PlayerStart : WMPObject
+    public class PlayerStart : WMPObject
     {
         public float X;
         public float Y;

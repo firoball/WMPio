@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace WMPio
 {
-    class Map
+    public class Map
     {
         public List<Vertex> Vertices;
         public List<Region> Regions;

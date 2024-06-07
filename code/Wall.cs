@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace WMPio
 {
-    class Wall : WMPObject
+    public class Wall : WMPObject
     {
         public string Name;
         public Vertex Vertex1;

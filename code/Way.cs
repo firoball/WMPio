@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace WMPio
 {
-    class Way : WMPObject
+    public class Way : WMPObject
     {
         public string Name { get; set; }
         public List<Point> Points { get; set; }
