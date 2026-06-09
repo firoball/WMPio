@@ -21,6 +21,58 @@ If in need of a WDL parser you may want to take a look at [WDL2CS](https://githu
 WMPio is targeted at Acknex3 only.
 There exist multiple versions of the Acknex game engine. From Acknex4 on, the technology has changed completely. WMPio won't work with versions other than v3.x.
 
+## Build Commands
+
+With migration to .NET Standard 2.1 and .NET 10.0 for multi platform support,
+explicit Visual Studio support has been dropped.
+Only a .csproj file is delivered - which in turn can also be openend by Visual Studio.
+
+### Build Executable
+.Net 10.0 (or future compatible) will be used for building.
+
+#### Debug
+`dotnet build [-c debug]`
+
+Output: `bin/debug/`
+Used for development
+
+#### Release
+`dotnet build -c release`
+
+Output: `bin/release/`
+Used for building release binary
+
+#### Publish
+`dotnet publish -c release`
+
+Output: `bin/release/publish/`
+
+Used for publishing release binary with all dependencies
+
+### Build DLL
+.Net Standard2.1 will be used for building.
+
+#### Debug
+`dotnet build [-c debugdll]`
+
+Output: `bin/debugdll/`
+
+Used for development
+
+#### Release
+`dotnet build -c releasedll`
+
+Output: `bin/releasedll/`
+
+Used for building release binary
+
+#### Publish
+`dotnet publish -c releasedll`
+
+Output: `bin/releasedll/publish/`
+
+Used for publishing release binary with all dependencies
+
 ## Trivia
 
 This project started as a test in order to find out how well ChatGPT can generate parsers for custom mostly unknown file formats.
