@@ -1,14 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Reflection;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace WMPio
 {
-    class Formatter
+    static class Formatter
     {
         private const string c_vertex = @"VERTEX	{0:F3} {1:F3} {2:F3};#{3:D}";
         private const string c_region = @"REGION	{0} {1:F3} {2:F3};#{3:D}";
@@ -45,7 +42,7 @@ namespace WMPio
 #---------------------------------------------";
 
         private const string c_footer = @"#-------------------- end ------------------------";
-
+        
         public static string Format(Map m, string filename)
         {
             StringBuilder wmp = new StringBuilder();
@@ -105,6 +102,23 @@ namespace WMPio
             wmp.AppendLine(c_footer);
 
             return wmp.ToString();
+        }
+
+        private const string c_statistics = @"Map Statistics:
+{0} Vertices 
+{1} Regions 
+{2} Walls 
+{3} Player_Starts
+{4} Things
+{5} Actors
+{6} Ways";
+        
+        public static string FormatStatistics(Map m)
+        {
+            return string.Format(CultureInfo.InvariantCulture, c_statistics, 
+                m.Vertices.Count, m.Regions.Count, m.Walls.Count, 
+                m.PlayerStarts.Count, m.Things.Count, m.Actors.Count, 
+                m.Ways.Count);
         }
     }
 }

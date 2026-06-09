@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace WMPio
 {
-    public class Way : WMPObject
+    public class Way : WmpObject
     {
         public string Name { get; set; }
         public List<Point> Points { get; set; }

@@ -2,24 +2,21 @@
 using System.IO;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 
 namespace WMPio
 {
     public class Map
     {
-        public List<Vertex> Vertices;
-        public List<Region> Regions;
-        public List<Wall> Walls;
-        public List<PlayerStart> PlayerStarts;
-        public List<Thing> Things;
-        public List<Actor> Actors;
-        public List<Way> Ways;
+        public readonly List<Vertex> Vertices;
+        public readonly List<Region> Regions;
+        public readonly List<Wall> Walls;
+        public readonly List<PlayerStart> PlayerStarts;
+        public readonly List<Thing> Things;
+        public readonly List<Actor> Actors;
+        public readonly List<Way> Ways;
 
-        private int newRegionIndex = 0; //region indexer for old format
+        private int m_newRegionIndex = 0; //region indexer for old format
 
         public Map()
         {
@@ -32,66 +29,82 @@ namespace WMPio
             Ways = new List<Way>();
         }
 
-        public void Export(string filePath)
+        public bool Export(string filePath)
         {
-            using (StreamWriter writer = new StreamWriter(filePath))
+            try
             {
-                string file = Path.GetFileName(filePath);
-                string output = Formatter.Format(this, file);
-                writer.Write(output);
+                using (StreamWriter writer = new StreamWriter(filePath))
+                {
+                    string file = Path.GetFileName(filePath);
+                    string output = Formatter.Format(this, file);
+                    writer.Write(output);
+                    return true;
+                }
+            }
+            catch (Exception)
+            {
+                return false;
             }
         }
 
-        public void Parse(string filePath)
+        public bool Parse(string filePath)
         {
-            using (StreamReader reader = new StreamReader(filePath))
+            try
             {
-                string line;
-                Regex comment = new Regex(@"^[ \t]*#.*$");
-                while ((line = reader.ReadLine()) != null)
+                using (StreamReader reader = new StreamReader(filePath))
                 {
-                    if (!comment.IsMatch(line) && !string.IsNullOrWhiteSpace(line))
+                    string line;
+                    Regex comment = new Regex(@"^[ \t]*#.*$");
+                    while ((line = reader.ReadLine()) != null)
                     {
-                        string[] data = line.Split(new[] { ';' }, StringSplitOptions.RemoveEmptyEntries);
-                        string[] values = data[0].Split(new[] { ' ', '\t' }, StringSplitOptions.RemoveEmptyEntries);
-                        int index = int.Parse(Regex.Replace(data[1], @"[ \t#index]", ""));
-
-                        string id = values[0].ToLower();
-                        switch (id)
+                        if (!comment.IsMatch(line) && !string.IsNullOrWhiteSpace(line))
                         {
-                            case "vertex":
-                                AddVertex(index, values);
-                                break;
+                            string[] data = line.Split(new[] { ';' }, StringSplitOptions.RemoveEmptyEntries);
+                            string[] values = data[0].Split(new[] { ' ', '\t' }, StringSplitOptions.RemoveEmptyEntries);
+                            int index = int.Parse(Regex.Replace(data[1], @"[ \t#index]", ""));
 
-                            case "region":
-                                AddRegion(index, values);
-                                break;
+                            string id = values[0].ToLower();
+                            switch (id)
+                            {
+                                case "vertex":
+                                    AddVertex(index, values);
+                                    break;
 
-                            case "actor":
-                                AddActor(index, values);
-                                break;
+                                case "region":
+                                    AddRegion(index, values);
+                                    break;
 
-                            case "thing":
-                                AddThing(index, values);
-                                break;
+                                case "actor":
+                                    AddActor(index, values);
+                                    break;
 
-                            case "wall":
-                                AddWall(index, values);
-                                break;
+                                case "thing":
+                                    AddThing(index, values);
+                                    break;
 
-                            case "player_start":
-                                AddPlayerStart(index, values);
-                                break;
+                                case "wall":
+                                    AddWall(index, values);
+                                    break;
 
-                            case "way":
-                                AddWay(index, values);
-                                break;
+                                case "player_start":
+                                    AddPlayerStart(index, values);
+                                    break;
 
-                            default:
-                                break;
+                                case "way":
+                                    AddWay(index, values);
+                                    break;
+
+                                default:
+                                    break;
+                            }
                         }
                     }
+                    return true;
                 }
+            }
+            catch  (Exception)
+            {
+                return false;
             }
         }
 
@@ -188,9 +201,9 @@ namespace WMPio
                 region = Regions.Find(r => r.Name == name); //old format
                 if (region == null)
                 {
-                    region = new Region(name, newRegionIndex);
+                    region = new Region(name, m_newRegionIndex);
                     Regions.Add(region);
-                    newRegionIndex++;
+                    m_newRegionIndex++;
                 }
             }
             return region;

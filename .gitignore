@@ -2,4 +2,5 @@
 /code/obj
 /code/Properties
 /code/.vs
+/.idea/
 *.meta

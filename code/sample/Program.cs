@@ -1,20 +1,57 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace WMPio
+namespace WMPio.sample
 {
-    class Program
+    internal static class Program
     {
-        static void Main(string[] args)
+        private static int Main(string[] args)
         {
+            bool error = false;
+
+            //Show help
+            if (args.Length == 0 || args.Contains("-h") || args.Contains("--help"))
+            {
+                Console.WriteLine($"Usage: {AppDomain.CurrentDomain.FriendlyName} options | inputfile [outputfile] ");
+                Console.WriteLine($"Options:");
+                Console.WriteLine($"-h, --help   Show help");
+
+                return 0;
+            }
+
+            string inFile = args[0];
             Map map = new Map();
-            //map.Parse("..\\..\\..\\meta\\vrdemw.wmp");
-            map.Parse("..\\..\\..\\meta\\vrdemw_old.wmp");
-            //map.Export("..\\..\\..\\meta\\vrdemw_wmpio.wmp");
-            map.Export("..\\..\\..\\meta\\vrdemw_old_wmpio.wmp");
+            Console.WriteLine($"Importing {inFile}...");
+            Console.WriteLine();
+            if (map.Parse(inFile)) //read map
+            {
+                Console.WriteLine(Formatter.FormatStatistics(map));
+                Console.WriteLine();
+
+                if (args.Length == 2)
+                {
+                    string outFile = args[1];
+                    Console.WriteLine($"Exporting {outFile}...");
+                    if (!map.Export(outFile)) //write map
+                    {
+                        Console.WriteLine($"Output file {outFile} cannot be written");
+                        error = true;
+                    }
+                }
+            }
+            else
+            {
+                Console.WriteLine($"Input file {inFile} cannot be read");
+                error = true;
+            }
+
+            if (error)
+            {
+                Console.WriteLine($"{AppDomain.CurrentDomain.FriendlyName} exited with error.");
+                return -1;
+            }
+
+            return 0;
         }
+
     }
 }

@@ -1,17 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿
 namespace WMPio
 {
-    public class WMPObject
+    public class WmpObject
     {
         public int Index;
 
-        public WMPObject(int index)
+        public WmpObject(int index)
         {
             Index = index;
         }
